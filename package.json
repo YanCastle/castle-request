@@ -1,0 +1,27 @@
+{
+  "name": "castle-request",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "files": [
+    "dist/index.js",
+    "dist/index.d.js",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YanCastle/castle-request.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YanCastle/castle-request/issues"
+  },
+  "homepage": "https://github.com/YanCastle/castle-request#readme",
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
+}
