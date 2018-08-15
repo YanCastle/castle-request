@@ -1,6 +1,6 @@
 {
   "name": "castle-request",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "",
   "main": "dist/index.js",
   "files": [
@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/YanCastle/castle-request#readme",
   "dependencies": {
-    "axios": "^0.18.0"
+    "axios": "^0.18.0",
+    "castle-wsclient": "^1.0.2"
   }
 }
