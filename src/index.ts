@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Client from 'castle-rpc-client';
+import { RPCType } from 'castle-rpc';
 const r = axios.create({
     withCredentials: true,
 })
@@ -37,6 +38,7 @@ export function set_ws_server(server: string, address: string = "") {
     config.WSServer = server;
     config.WSClient = new Client(server, address)
 }
+export var WSClient = config.WSClient;
 
 export enum RequestType {
     HTTP, Websocket
@@ -59,7 +61,7 @@ export default class Request {
      * @param Data 
      */
     async _post(method: string, Data: any) {
-        let rs: any = this.RequestType == RequestType.HTTP ? (await r.post(get_url(this.Controller, method), Data)) : (await config.WSClient.request(`${this.Controller}/${method}`, Data))
+        let rs: any = this.RequestType == RequestType.HTTP ? (await r.post(get_url(this.Controller, method), Data)) : (await config.WSClient.request(`${this.Controller}/${method}`, Data, { Type: RPCType.Request }))
         if (rs.e) {
             throw new Error(rs.e)
         }
