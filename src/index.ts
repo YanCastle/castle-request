@@ -36,9 +36,9 @@ export function set_server(server: string) {
  */
 export function set_ws_server(server: string, address: string = "") {
     config.WSServer = server;
-    config.WSClient = new Client(server, address)
+    WSClient.server = server;
 }
-export var WSClient = config.WSClient;
+export const WSClient = new Client('')
 
 export enum RequestType {
     HTTP, Websocket
@@ -61,11 +61,15 @@ export default class Request {
      * @param Data 
      */
     async _post(method: string, Data: any) {
-        let rs: any = this.RequestType == RequestType.HTTP ? (await r.post(get_url(this.Controller, method), Data)) : (await config.WSClient.request(`${this.Controller}/${method}`, Data, { Type: RPCType.Request }))
-        if (rs.e) {
-            throw new Error(rs.e)
+        if (this.RequestType == RequestType.HTTP) {
+            let rs: any = await r.post(get_url(this.Controller, method), Data)
+            if (rs.e) {
+                throw new Error(rs.e)
+            }
+            return rs.d
+        } else {
+            return await config.WSClient.request(`${this.Controller}/${method}`, Data, { Type: RPCType.Request })
         }
-        return rs.d
     }
     _pk: string = "";
     /**
