@@ -1,5 +1,5 @@
 import axios from 'axios'
-import WSClient from 'castle-wsclient';
+import Client from 'castle-rpc-client';
 const r = axios.create({
     withCredentials: true,
 })
@@ -13,7 +13,7 @@ export interface SearchParams {
     Keyword?: string,
     Sort?: string
 }
-export const config: { Server: string, WSServer: string, WSClient?: WSClient } = {
+export const config: { Server: string, WSServer: string, WSClient?: Client } = {
     Server: '',
     WSServer: '',
     // WSClient: {
@@ -35,7 +35,7 @@ export function set_server(server: string) {
  */
 export function set_ws_server(server: string, address: string = "") {
     config.WSServer = server;
-    config.WSClient = new WSClient(server, address)
+    config.WSClient = new Client(server, address)
 }
 
 export enum RequestType {
