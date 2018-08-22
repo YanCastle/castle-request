@@ -64,11 +64,15 @@ export default class Request {
         if (this.RequestType == RequestType.HTTP) {
             let rs: any = await r.post(get_url(this.Controller, method), Data)
             if (rs.e) {
-                throw new Error(rs.e)
+                throw new Error("string" == typeof rs.e ? rs.e : rs.e.m)
             }
             return rs.d
         } else {
-            return await config.WSClient.request(`${this.Controller}/${method}`, Data, { Type: RPCType.Request })
+            try {
+                return await config.WSClient.request(`${this.Controller}/${method}`, Data, { Type: RPCType.Request })
+            } catch (error) {
+                throw new Error("string" == typeof error ? error : error.message)
+            }
         }
     }
     _pk: string = "";
