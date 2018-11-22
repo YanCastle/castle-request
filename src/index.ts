@@ -1,6 +1,4 @@
 import axios from 'axios'
-import Client from 'castle-rpc-client';
-import { RPCType } from 'castle-rpc';
 const r = axios.create({
     withCredentials: true,
 })
@@ -14,7 +12,7 @@ export interface SearchParams {
     Keyword?: string,
     Sort?: string
 }
-export const config: { Server: string, WSServer: string, WSClient?: Client } = {
+export const config: { Server: string, WSServer: string, WSClient?: any } = {
     Server: '',
     WSServer: '',
     // WSClient: {
@@ -38,7 +36,7 @@ export function set_ws_server(server: string, address: string = "") {
     config.WSServer = server;
     WSClient.server = server;
 }
-export const WSClient = new Client('')
+export var WSClient;
 
 export enum RequestType {
     HTTP, Websocket
@@ -69,7 +67,7 @@ export default class Request {
             return rs.d
         } else {
             try {
-                return await config.WSClient.request(`${this.Controller}/${method}`, Data, { Type: RPCType.Request })
+                // return await config.WSClient.request(`${this.Controller}/${method}`, Data, { Type: RPCType.Request })
             } catch (error) {
                 throw new Error("string" == typeof error ? error : error.message)
             }
