@@ -1,9 +1,23 @@
 import axios from 'axios'
+import * as store from 'store'
+var Token = store.get('token')
 const r = axios.create({
     withCredentials: true,
 })
+// 读取并设置token
 r.interceptors.response.use(response => {
+    if (response.headers['token']) {
+        Token = response.headers['token'];
+        store.set('token', Token)
+    }
     return response.data
+})
+/**
+ * 封装Token
+ */
+r.interceptors.request.use((req) => {
+    req.headers['token'] = Token;
+    return req;
 })
 export interface SearchParams {
     W?: any,
